@@ -10,19 +10,19 @@
     using Newtonsoft.Json.Linq;
     using Utils;
 
-    public class VaultKeyValueEngineConfigurationProvider : ConfigurationProvider, IDisposable
+    public class VaultConfigurationProvider : ConfigurationProvider, IDisposable
     {
         private readonly IVaultKeyValueEngine _engine;
         private readonly object _lock = new object();
-        private readonly VaultKeyValueEngineConfigurationSource _source;
+        private readonly VaultConfigurationSource _source;
         private Timer _timer;
 
         /// <summary>
-        ///     Initializes a new <see cref="VaultKeyValueEngineConfigurationProvider" />
+        ///     Initializes a new <see cref="VaultConfigurationProvider" />
         /// </summary>
         /// <param name="engine">KeyValue engine instance.</param>
         /// <param name="source"></param>
-        public VaultKeyValueEngineConfigurationProvider(IVaultKeyValueEngine engine, VaultKeyValueEngineConfigurationSource source)
+        public VaultConfigurationProvider(IVaultKeyValueEngine engine, VaultConfigurationSource source)
         {
             _engine = engine ?? throw new ArgumentNullException(nameof(engine));
             _source = source ?? throw new ArgumentNullException(nameof(source));

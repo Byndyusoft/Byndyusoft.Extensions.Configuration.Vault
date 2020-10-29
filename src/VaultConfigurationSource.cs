@@ -9,7 +9,7 @@ namespace Byndyusoft.Extensions.Configuration.Vault
     /// <summary>
     /// Represents a Vault as an <see cref="IConfigurationSource" />.
     /// </summary>
-    public class VaultKeyValueEngineConfigurationSource : IConfigurationSource
+    public class VaultConfigurationSource : IConfigurationSource
     {
         /// <summary>
         /// The Vault Server Uri with port.
@@ -57,16 +57,16 @@ namespace Byndyusoft.Extensions.Configuration.Vault
         public bool Optional { get; set; } = true;
 
         /// <summary>
-        /// Builds the <see cref="VaultKeyValueEngineConfigurationProvider" /> for this source.
+        /// Builds the <see cref="VaultConfigurationProvider" /> for this source.
         /// </summary>
         /// <param name="builder">The <see cref="IConfigurationBuilder" />.</param>
-        /// <returns>A <see cref="VaultKeyValueEngineConfigurationProvider" /></returns>
+        /// <returns>A <see cref="VaultConfigurationProvider" /></returns>
         public IConfigurationProvider Build(IConfigurationBuilder builder)
         {
             if (builder == null) throw new ArgumentNullException(nameof(builder));
 
             var engine = new VaultKeyValueEngineFactory().CreateEngine(this);
-            return new VaultKeyValueEngineConfigurationProvider(engine, this);
+            return new VaultConfigurationProvider(engine, this);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Byndyusoft.Extensions.Configuration.Vault
             /// <summary>
             ///  The version of the KeyValue secrets engine.
             /// </summary>
-            public VaultKeyValueEngineVersion Version { get; set; } = VaultKeyValueEngineVersion.V2;
+            public VaultEngineVersion Version { get; set; } = VaultEngineVersion.V2;
         }
     }
 }

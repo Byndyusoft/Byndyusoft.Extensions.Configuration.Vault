@@ -2,9 +2,9 @@
 
 namespace Byndyusoft.Extensions.Configuration.Vault
 {
-    public class VaultKeyValueEngineNotFountException : Exception
+    public class VaultEngineNotFoundException : Exception
     {
-        public VaultKeyValueEngineNotFountException(string engineName)
+        public VaultEngineNotFoundException(string engineName)
         {
             EngineName = engineName;
         }

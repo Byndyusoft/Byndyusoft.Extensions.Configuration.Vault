@@ -8,7 +8,7 @@ namespace Byndyusoft.Extensions.Configuration.Vault.Engines
 {
     public abstract class VaultKeyValueEngine : IVaultKeyValueEngine
     {
-        protected VaultKeyValueEngine(VaultClient client, VaultKeyValueEngineConfigurationSource source)
+        protected VaultKeyValueEngine(VaultClient client, VaultConfigurationSource source)
         {
             Client = client;
             Source = source;
@@ -19,7 +19,7 @@ namespace Byndyusoft.Extensions.Configuration.Vault.Engines
 
         protected VaultClient Client { get; }
 
-        private VaultKeyValueEngineConfigurationSource Source { get; }
+        private VaultConfigurationSource Source { get; }
 
         protected abstract Task<IEnumerable<string>> ReadSecretKeysAsync();
 
@@ -53,7 +53,7 @@ namespace Byndyusoft.Extensions.Configuration.Vault.Engines
             {
                 if (Source.Optional == false && await CheckIfExistsAsync().ConfigureAwait(false) == false)
                 {
-                    throw new VaultKeyValueEngineNotFountException(Name);
+                    throw new VaultEngineNotFoundException(Name);
                 }
             }
 

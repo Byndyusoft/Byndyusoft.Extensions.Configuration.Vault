@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Error_InvalidEngineName" xml:space="preserve">
+    <value>Engine name must be a non-empty string.</value>
+  </data>
+  <data name="Error_InvalidVaultServerUrl" xml:space="preserve">
+    <value>Vault server url must be a non-empty string.</value>
+  </data>
   <data name="Error_KeyIsDuplicated" xml:space="preserve">
     <value>A duplicate key '{0}' was found.</value>
   </data>

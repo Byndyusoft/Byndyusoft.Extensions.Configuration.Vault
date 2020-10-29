@@ -10,7 +10,6 @@
 
 namespace Byndyusoft.Extensions.Configuration.Vault {
     using System;
-    using System.Reflection;
     
     
     /// <summary>
@@ -40,7 +39,7 @@ namespace Byndyusoft.Extensions.Configuration.Vault {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Byndyusoft.Extensions.Configuration.Vault.Resources", typeof(Resources).GetTypeInfo().Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Byndyusoft.Extensions.Configuration.Vault.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -58,6 +57,24 @@ namespace Byndyusoft.Extensions.Configuration.Vault {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Engine name must be a non-empty string..
+        /// </summary>
+        internal static string Error_InvalidEngineName {
+            get {
+                return ResourceManager.GetString("Error_InvalidEngineName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vault server url must be a non-empty string..
+        /// </summary>
+        internal static string Error_InvalidVaultServerUrl {
+            get {
+                return ResourceManager.GetString("Error_InvalidVaultServerUrl", resourceCulture);
             }
         }
         

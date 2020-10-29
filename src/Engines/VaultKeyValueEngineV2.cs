@@ -6,7 +6,7 @@ namespace Byndyusoft.Extensions.Configuration.Vault.Engines
 {
     public class VaultKeyValueEngineV2 : VaultKeyValueEngine
     {
-        public VaultKeyValueEngineV2(VaultClient client, VaultKeyValueEngineConfigurationSource source) : base(client, source)
+        public VaultKeyValueEngineV2(VaultClient client, VaultConfigurationSource source) : base(client, source)
         {
         }
 

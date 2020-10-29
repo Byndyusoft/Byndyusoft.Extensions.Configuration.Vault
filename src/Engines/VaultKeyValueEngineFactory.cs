@@ -6,19 +6,19 @@ namespace Byndyusoft.Extensions.Configuration.Vault.Engines
 {
     public class VaultKeyValueEngineFactory
     {
-        public IVaultKeyValueEngine CreateEngine(VaultKeyValueEngineConfigurationSource source)
+        public IVaultKeyValueEngine CreateEngine(VaultConfigurationSource source)
         {
             var clientSettings = source.AsVaultClientSettings();
             var client = new VaultClient(clientSettings);
 
             switch (source.Engine.Version)
             {
-                case VaultKeyValueEngineVersion.V1:
+                case VaultEngineVersion.V1:
                     return new VaultKeyValueEngineV1(client, source);
-                case VaultKeyValueEngineVersion.V2:
+                case VaultEngineVersion.V2:
                     return new VaultKeyValueEngineV2(client, source);
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(VaultKeyValueEngineVersion));
+                    throw new ArgumentOutOfRangeException(nameof(VaultEngineVersion));
             }
 
         }
