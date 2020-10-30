@@ -1,27 +1,41 @@
-﻿namespace Byndyusoft.Extensions.Configuration.Vault.Api
+﻿namespace Byndyusoft.Extensions.Configuration.Vault.Vault
 {
     using System;
+    using System.Net.Http;
     using System.Threading.Tasks;
     using Microsoft.Extensions.Configuration;
     using VaultSharp;
     using VaultSharp.V1.SecretsEngines;
 
-    public static class VaultClientExtensions
+    internal static class VaultClientExtensions
     {
-        public static async Task<Engine> CreateEngine(this VaultClient client, string engine, VaultEngineVersion version)
+        public static async Task<bool> IsInitializedAsync(this VaultClient client)
+        {
+            try
+            {
+                var status = await client.V1.System.GetHealthStatusAsync().ConfigureAwait(false);
+                return status.Initialized;
+            }
+            catch (HttpRequestException)
+            {
+                return false;
+            }
+        }
+        
+        public static async Task<Engine> CreateEngineAsync(this VaultClient client, string engine, VaultEngineVersion version)
         {
             await client.V1.System.MountSecretBackendAsync(
                 new SecretsEngine
                 {
                     Type = MapType(version),
                     Path = engine
-                });
+                }).ConfigureAwait(false);
             return new Engine(client, engine, version);
         }
 
-        public static async Task RemoveEngine(this VaultClient client, string engine)
+        public static async Task RemoveEngineAsync(this VaultClient client, string engine)
         {
-            await client.V1.System.UnmountSecretBackendAsync(engine);
+            await client.V1.System.UnmountSecretBackendAsync(engine).ConfigureAwait(false);
         }
 
         private static SecretsEngineType MapType(VaultEngineVersion version)

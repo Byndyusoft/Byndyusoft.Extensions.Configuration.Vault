@@ -3,18 +3,25 @@ name: push
 on:
   - push
 
+env:
+  VAULT_TOKEN: github
+
 jobs:
   push:
     name: push
-
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     env:
       DOTNET_NOLOGO: true
-    steps:
+      VAULT_ADDRESS: http://localhost:8200
+    services:
+      vault:
+        image: vault
+        ports: 
+          - 8200:8200
+        env:
+          VAULT_ADDR: ${{env.VAULT_ADDRESS}}
+          VAULT_DEV_ROOT_TOKEN_ID: ${{env.VAULT_TOKEN}}    
+    steps:    
       - name: checkout
         uses: actions/checkout@v2
 
@@ -28,6 +35,6 @@ jobs:
 
       - name: build
         run: dotnet build
-
+       
       - name: test
         run: dotnet test

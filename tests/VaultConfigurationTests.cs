@@ -1,10 +1,10 @@
 ﻿namespace Byndyusoft.Extensions.Configuration.Vault
 {
     using System;
-    using System.Collections.Generic;
     using System.Threading.Tasks;
     using Api;
     using Microsoft.Extensions.Configuration;
+    using Vault;
     using VaultSharp;
     using VaultSharp.V1.AuthMethods;
     using VaultSharp.V1.AuthMethods.Token;
@@ -18,7 +18,7 @@
 
             public VaultFixture()
             {
-                Api = new DockerVaultApi();
+                Api = VaultApi.Create();
                 //Api = new ExtenalVaultApi("http://localhost:8200", "s.aZxzEX9aDL6GWIudspV5l3wl");
                 Api.StartAsync().ConfigureAwait(false).GetAwaiter().GetResult();
             }
@@ -44,7 +44,7 @@
 
         public async Task InitializeAsync()
         {
-            await _vaultClient.RemoveEngine(_engineName);
+            await _vaultClient.RemoveEngineAsync(_engineName);
         }
 
         public Task DisposeAsync() => Task.CompletedTask;
@@ -62,9 +62,8 @@
         public async Task VaultConfiguration_ReadsSimpleValue(VaultEngineVersion version)
         {
             // Arrange
-            var engine = await _vaultClient.CreateEngine(_engineName, version);
-            var secretValue = new Dictionary<string, object> {{"key", "value"}};
-            await engine.AddSecretAsync("secret", secretValue);
+            var engine = await _vaultClient.CreateEngineAsync(_engineName, version);
+            await engine.SetSecretValueAsync("secret", new {key = "value"});
 
             // Act
             var config = Configure(vault => { vault.Engine.Version = version; });
@@ -79,9 +78,8 @@
         public async Task VaultConfiguration_ReadsComplexValue(VaultEngineVersion version)
         {
             // Arrange
-            var engine = await _vaultClient.CreateEngine(_engineName, version);
-            var secretValue = new Dictionary<string, object> {{"key1", "value1"}, {"key2", "value2"}};
-            await engine.AddSecretAsync("secret", secretValue);
+            var engine = await _vaultClient.CreateEngineAsync(_engineName, version);
+            await engine.SetSecretValueAsync("secret", new {key1 = "value1", key2 = "value2"});
 
             // Act
             var config = Configure(vault => { vault.Engine.Version = version; });
@@ -97,15 +95,15 @@
         public async Task VaultConfiguration_ReadsJsonValue(VaultEngineVersion version)
         {
             // Arrange
-            var engine = await _vaultClient.CreateEngine(_engineName, version);
+            var engine = await _vaultClient.CreateEngineAsync(_engineName, version);
 
             var json = new
                        {
                            key1 = "value1",
                            key2 = "value2"
                        };
-            var secretValue = new Dictionary<string, object> {{"json", json}};
-            await engine.AddSecretAsync("secret", secretValue);
+
+            await engine.SetSecretValueAsync("secret", new {json});
 
             // Act
             var config = Configure(vault => { vault.Engine.Version = version; });
@@ -118,7 +116,7 @@
         [Theory]
         [InlineData(VaultEngineVersion.V1)]
         [InlineData(VaultEngineVersion.V2)]
-        public void VaultConfiguration_NoEngine_ReadsNothing(VaultEngineVersion version)
+        public void VaultConfiguration_NoEngine_ReadsNothingIfOptional(VaultEngineVersion version)
         {
             // Act
             var config = Configure(
@@ -148,6 +146,35 @@
 
             // Assert
             Assert.Equal(_engineName, exception.EngineName);
+        }
+
+        [Theory]
+        [InlineData(VaultEngineVersion.V1)]
+        [InlineData(VaultEngineVersion.V2)]
+        public async Task VaultConfiguration_ReloadsValue(VaultEngineVersion version)
+        {
+            // Arrange
+            var engine = await _vaultClient.CreateEngineAsync(_engineName, version);
+            await engine.SetSecretValueAsync("secret", new {key = "value"});
+
+            // Act
+            var config = Configure(vault =>
+                                   {
+                                       vault.Engine.Version = version;
+                                       vault.ReloadOnChange = true;
+                                       vault.ReloadDelay = TimeSpan.FromMilliseconds(100);
+                                   });
+            Assert.Equal("value", config.GetValue<string>("secret:key"));
+
+            var tcs = new TaskCompletionSource<object>();
+            using var callback = config.GetReloadToken().RegisterChangeCallback(_ => tcs.SetResult(_), null);
+
+            await engine.SetSecretValueAsync("secret", new {key = "new"});
+
+            await tcs.Task;
+
+            // Assert
+            Assert.Equal("new", config.GetValue<string>("secret:key"));
         }
     }
 }

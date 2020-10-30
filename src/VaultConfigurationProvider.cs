@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Net.Http;
     using System.Threading;
     using Engines;
     using Extensions;
@@ -51,6 +52,10 @@
             {
                 DoLoad(reload);
             }
+            catch(HttpRequestException) when(reload)
+            {
+                // do nothing
+            }
             finally
             {
                 Monitor.Exit(_lock);
@@ -61,7 +66,10 @@
         {
             var oldData = Data;
 
-            if (reload) Data = new Dictionary<string, string>();
+            if (reload)
+            {
+                Data = new Dictionary<string, string>();
+            }
 
             var secrets = AsyncHelper.RunSync(async () => await _engine.ReadSecretsAsync());
             foreach (var secret in secrets) AddSecret(secret);

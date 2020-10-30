@@ -2,16 +2,15 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.IO;
     using System.Net;
     using System.Net.Sockets;
-    using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
     using Docker.DotNet;
     using Docker.DotNet.Models;
-    
+    using Vault;
+    using VaultSharp;
+
     public class DockerVaultApi : IVaultApi
     {
         private readonly string _port;
@@ -34,7 +33,7 @@
             await _docker.Images.CreateImageAsync(
                 new ImagesCreateParameters
                 {
-                    FromImage = "vault",
+                    FromImage = "vault", 
                     Tag = "latest"
                 }, 
                 null, new Progress<JSONMessage>());
@@ -83,24 +82,16 @@
 
         private async Task WaitStartingAsync(TimeSpan timeout)
         {
-            var parameters = new ContainerLogsParameters
-                             {
-                                 ShowStdout = true,
-                                 ShowStderr = true
-                             };
-            var sw = new Stopwatch();
-            sw.Start();
-            while (sw.Elapsed < timeout)
+            var settings = new VaultClientSettings(Url, null);
+            var client = new VaultClient(settings);
+
+            using var cts = new CancellationTokenSource(timeout);
+
+            while (cts.IsCancellationRequested == false)
             {
-                var logs = await _docker.Containers.GetContainerLogsAsync(_containerId, true, parameters);
-                var (stdout, _) = await logs.ReadOutputToEndAsync(CancellationToken.None);
-
-                if (stdout.Contains("Vault server started!"))
-                {
+                if (await client.IsInitializedAsync().ConfigureAwait(false))
                     return;
-                }
-
-                await Task.Delay(100);
+                await Task.Delay(100, cts.Token).ConfigureAwait(false);
             }
 
             throw new TimeoutException();

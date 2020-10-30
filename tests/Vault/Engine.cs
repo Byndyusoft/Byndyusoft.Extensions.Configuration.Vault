@@ -1,4 +1,4 @@
-﻿namespace Byndyusoft.Extensions.Configuration.Vault.Api
+﻿namespace Byndyusoft.Extensions.Configuration.Vault.Vault
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -18,7 +18,7 @@
             _version = version;
         }
 
-        public async Task AddSecretAsync(string secretName, Dictionary<string, object> values)
+        public async Task SetSecretValueAsync(string secretName, Dictionary<string, object> values)
         {
             switch (_version)
             {
@@ -29,6 +29,11 @@
                     await _client.V1.Secrets.KeyValue.V2.WriteSecretAsync(secretName, values, mountPoint: _name);
                     return;
             }
+        }
+
+        public async Task SetSecretValueAsync(string secretName, object values)
+        {
+            await SetSecretValueAsync(secretName, values.ToDictionary());
         }
     }
 }
