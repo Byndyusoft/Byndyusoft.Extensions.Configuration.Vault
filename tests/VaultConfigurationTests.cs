@@ -57,9 +57,9 @@
         }
 
         [Theory]
-        [InlineData(VaultEngineVersion.V1)]
-        [InlineData(VaultEngineVersion.V2)]
-        public async Task VaultConfiguration_ReadsSimpleValue(VaultEngineVersion version)
+        [InlineData(VaultKeyValueEngineVersion.V1)]
+        [InlineData(VaultKeyValueEngineVersion.V2)]
+        public async Task VaultConfiguration_ReadsSimpleValue(VaultKeyValueEngineVersion version)
         {
             // Arrange
             var engine = await _vaultClient.CreateEngineAsync(_engineName, version);
@@ -73,9 +73,9 @@
         }
 
         [Theory]
-        [InlineData(VaultEngineVersion.V1)]
-        [InlineData(VaultEngineVersion.V2)]
-        public async Task VaultConfiguration_ReadsComplexValue(VaultEngineVersion version)
+        [InlineData(VaultKeyValueEngineVersion.V1)]
+        [InlineData(VaultKeyValueEngineVersion.V2)]
+        public async Task VaultConfiguration_ReadsComplexValue(VaultKeyValueEngineVersion version)
         {
             // Arrange
             var engine = await _vaultClient.CreateEngineAsync(_engineName, version);
@@ -90,9 +90,9 @@
         }
 
         [Theory]
-        [InlineData(VaultEngineVersion.V1)]
-        [InlineData(VaultEngineVersion.V2)]
-        public async Task VaultConfiguration_ReadsJsonValue(VaultEngineVersion version)
+        [InlineData(VaultKeyValueEngineVersion.V1)]
+        [InlineData(VaultKeyValueEngineVersion.V2)]
+        public async Task VaultConfiguration_ReadsJsonValue(VaultKeyValueEngineVersion version)
         {
             // Arrange
             var engine = await _vaultClient.CreateEngineAsync(_engineName, version);
@@ -114,9 +114,9 @@
         }
 
         [Theory]
-        [InlineData(VaultEngineVersion.V1)]
-        [InlineData(VaultEngineVersion.V2)]
-        public void VaultConfiguration_NoEngine_ReadsNothingIfOptional(VaultEngineVersion version)
+        [InlineData(VaultKeyValueEngineVersion.V1)]
+        [InlineData(VaultKeyValueEngineVersion.V2)]
+        public void VaultConfiguration_NoEngine_ReadsNothingIfOptional(VaultKeyValueEngineVersion version)
         {
             // Act
             var config = Configure(
@@ -131,9 +131,9 @@
         }
 
         [Theory]
-        [InlineData(VaultEngineVersion.V1)]
-        [InlineData(VaultEngineVersion.V2)]
-        public void VaultConfiguration_NoEngine_ThrowsIfNotOptional(VaultEngineVersion version)
+        [InlineData(VaultKeyValueEngineVersion.V1)]
+        [InlineData(VaultKeyValueEngineVersion.V2)]
+        public void VaultConfiguration_NoEngine_ThrowsIfNotOptional(VaultKeyValueEngineVersion version)
         {
             // Act
             var exception = Assert.Throws<VaultEngineNotFoundException>(
@@ -149,9 +149,9 @@
         }
 
         [Theory]
-        [InlineData(VaultEngineVersion.V1)]
-        [InlineData(VaultEngineVersion.V2)]
-        public async Task VaultConfiguration_ReloadsValue(VaultEngineVersion version)
+        [InlineData(VaultKeyValueEngineVersion.V1)]
+        [InlineData(VaultKeyValueEngineVersion.V2)]
+        public async Task VaultConfiguration_ReloadsValue(VaultKeyValueEngineVersion version)
         {
             // Arrange
             var engine = await _vaultClient.CreateEngineAsync(_engineName, version);

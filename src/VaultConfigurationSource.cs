@@ -14,12 +14,12 @@ namespace Byndyusoft.Extensions.Configuration.Vault
         /// <summary>
         /// The Vault Server Uri with port.
         /// </summary>
-        public string Uri { get; set; }
+        internal string Uri { get; set; }
 
         /// <summary>
         /// The auth method to be used to acquire a vault token.
         /// </summary>
-        public IAuthMethodInfo AuthMethod { get; set; }
+        internal IAuthMethodInfo AuthMethod { get; set; }
 
         /// <summary>
         ///  The version of the KeyValue secrets engine.
@@ -83,12 +83,12 @@ namespace Byndyusoft.Extensions.Configuration.Vault
             /// <summary>
             /// The name of the KeyValue secrets engine.
             /// </summary>
-            public string Name { get; set; }
+            public string Name { get; internal set; }
 
             /// <summary>
             ///  The version of the KeyValue secrets engine.
             /// </summary>
-            public VaultEngineVersion Version { get; set; } = VaultEngineVersion.V2;
+            public VaultKeyValueEngineVersion Version { get; set; } = VaultKeyValueEngineVersion.V2;
         }
     }
 }

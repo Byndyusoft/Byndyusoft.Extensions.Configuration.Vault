@@ -13,12 +13,12 @@ namespace Byndyusoft.Extensions.Configuration.Vault.Engines
 
             switch (source.Engine.Version)
             {
-                case VaultEngineVersion.V1:
+                case VaultKeyValueEngineVersion.V1:
                     return new VaultKeyValueEngineV1(client, source);
-                case VaultEngineVersion.V2:
+                case VaultKeyValueEngineVersion.V2:
                     return new VaultKeyValueEngineV2(client, source);
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(VaultEngineVersion));
+                    throw new ArgumentOutOfRangeException(nameof(VaultKeyValueEngineVersion));
             }
 
         }

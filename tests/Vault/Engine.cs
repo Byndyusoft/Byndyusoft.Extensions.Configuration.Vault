@@ -9,9 +9,9 @@
     {
         private readonly VaultClient _client;
         private readonly string _name;
-        private readonly VaultEngineVersion _version;
+        private readonly VaultKeyValueEngineVersion _version;
 
-        public Engine(VaultClient client, string name, VaultEngineVersion version)
+        public Engine(VaultClient client, string name, VaultKeyValueEngineVersion version)
         {
             _client = client;
             _name = name;
@@ -22,10 +22,10 @@
         {
             switch (_version)
             {
-                case VaultEngineVersion.V1:
+                case VaultKeyValueEngineVersion.V1:
                     await _client.V1.Secrets.KeyValue.V1.WriteSecretAsync(secretName, values, _name);
                     return;
-                case VaultEngineVersion.V2:
+                case VaultKeyValueEngineVersion.V2:
                     await _client.V1.Secrets.KeyValue.V2.WriteSecretAsync(secretName, values, mountPoint: _name);
                     return;
             }

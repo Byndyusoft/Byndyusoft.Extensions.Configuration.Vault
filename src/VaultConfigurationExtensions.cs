@@ -77,7 +77,7 @@ namespace Microsoft.Extensions.Configuration
         /// <param name="builder">The <see cref="IConfigurationBuilder"/> to add to.</param>
         /// <param name="configureSource">Configures the source.</param>
         /// <returns>The <see cref="IConfigurationBuilder"/>.</returns>
-        public static IConfigurationBuilder AddVault(this IConfigurationBuilder builder,
+        internal static IConfigurationBuilder AddVault(this IConfigurationBuilder builder,
             Action<VaultConfigurationSource> configureSource)
             => builder.Add(configureSource);
     }

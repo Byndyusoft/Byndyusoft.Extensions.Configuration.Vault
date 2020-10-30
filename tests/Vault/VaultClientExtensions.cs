@@ -22,7 +22,7 @@
             }
         }
         
-        public static async Task<Engine> CreateEngineAsync(this VaultClient client, string engine, VaultEngineVersion version)
+        public static async Task<Engine> CreateEngineAsync(this VaultClient client, string engine, VaultKeyValueEngineVersion version)
         {
             await client.V1.System.MountSecretBackendAsync(
                 new SecretsEngine
@@ -38,13 +38,13 @@
             await client.V1.System.UnmountSecretBackendAsync(engine).ConfigureAwait(false);
         }
 
-        private static SecretsEngineType MapType(VaultEngineVersion version)
+        private static SecretsEngineType MapType(VaultKeyValueEngineVersion version)
         {
             switch (version)
             {
-                case VaultEngineVersion.V1:
+                case VaultKeyValueEngineVersion.V1:
                     return SecretsEngineType.KeyValueV1;
-                case VaultEngineVersion.V2:
+                case VaultKeyValueEngineVersion.V2:
                     return SecretsEngineType.KeyValueV2;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(version));

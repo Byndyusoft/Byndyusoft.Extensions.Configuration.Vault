@@ -1,7 +1,7 @@
 ﻿// ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.Configuration
 {
-    public enum VaultEngineVersion
+    public enum VaultKeyValueEngineVersion
     {
         V1,
         V2
