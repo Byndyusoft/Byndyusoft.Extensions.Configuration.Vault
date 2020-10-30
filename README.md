@@ -1,13 +1,18 @@
 # Byndyusoft.Extensions.Configuration.Vault
-HashiCorp Vault configuration provider implementation for Microsoft.Extensions.Configuration
 
 [![(License)](https://img.shields.io/github/license/Byndyusoft/Byndyusoft.Extensions.Configuration.Vault.svg)](LICENSE.txt)
 [![Nuget](http://img.shields.io/nuget/v/Byndyusoft.Extensions.Configuration.Vault.svg?maxAge=10800)](https://www.nuget.org/packages/Byndyusoft.Extensions.Configuration.Vault/) [![NuGet downloads](https://img.shields.io/nuget/dt/Byndyusoft.Extensions.Configuration.Vault.svg)](https://www.nuget.org/packages/Byndyusoft.Extensions.Configuration.Vault/) 
 
-## Usage
-
 The package is based on [VaultSharp](https://github.com/rajanadar/VaultSharp) library and provides an extension method called `AddVault` for `IConfigurationBuilder`. 
 Package adds to builder `VaultConfigurationProvider` which works with secrets stored in Vault's [KV Secrects Engine](https://www.vaultproject.io/docs/secrets/kv). 
+
+## Installing
+
+```shell
+dotnet add package Byndyusoft.Extensions.Configuration.Vault
+```
+
+## Usage
 
 A minimal example is shown below:
 ```
@@ -70,12 +75,6 @@ var builder = new ConfigurationBuilder()
 			vault.ReloadOnChange = true;
 			vault.ReloadDelay = TimeSpan.FromMinutes(1);
 		});
-```
-
-## Installing
-
-```shell
-dotnet add package Byndyusoft.Extensions.Configuration.Vault
 ```
 
 # Contributing
