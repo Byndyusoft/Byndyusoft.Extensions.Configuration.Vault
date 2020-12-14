@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Byndyusoft.Extensions.Configuration.Vault</RootNamespace>
+    <Version>0.1.0</Version>
+    <PackageId>Byndyusoft.Extensions.Configuration.Vault</PackageId>
+    <Title>Byndyusoft.Extensions.Configuration.Vault</Title>
+    <Authors>Byndyusoft</Authors>
+    <Description>HashiCorp Vault configuration provider implementation for Microsoft.Extensions.Configuration</Description>
+    <PackageTags>Byndyusoft;Extensions;Configuration;Vault</PackageTags>
+    <RepositoryUrl>https://github.com/Byndyusoft/Byndyusoft.Extensions.Configuration.Vault</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageIcon>icon.png</PackageIcon>
+    <LangVersion>8.0</LangVersion>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\icon.png" Pack="true" PackagePath="icon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
+    <PackageReference Include="VaultSharp" Version="1.6.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>
