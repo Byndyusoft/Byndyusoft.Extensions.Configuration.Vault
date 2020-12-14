@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>Byndyusoft.Extensions.Configuration.Vault</RootNamespace>
-    <PackageVersion>0.1.0</PackageVersion>
+    <Version>0.1.0</Version>
     <PackageId>Byndyusoft.Extensions.Configuration.Vault</PackageId>
     <Title>Byndyusoft.Extensions.Configuration.Vault</Title>
     <Authors>Byndyusoft</Authors>
@@ -22,7 +22,6 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="5.0.0" />
     <PackageReference Include="VaultSharp" Version="1.6.0.1" />
   </ItemGroup>
 
