@@ -52,7 +52,7 @@
             {
                 DoLoad(reload);
             }
-            catch(HttpRequestException) when(reload)
+            catch (HttpRequestException) when (reload)
             {
                 // do nothing
             }
@@ -66,10 +66,7 @@
         {
             var oldData = Data;
 
-            if (reload)
-            {
-                Data = new Dictionary<string, string>();
-            }
+            if (reload) Data = new Dictionary<string, string>();
 
             var secrets = AsyncHelper.RunSync(async () => await _engine.ReadSecretsAsync());
             foreach (var secret in secrets) AddSecret(secret);

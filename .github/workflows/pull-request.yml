@@ -11,7 +11,7 @@ jobs:
     name: pull-request
     runs-on: ubuntu-latest
     env:
-      DOTNET_NOLOGO: true
+      DOTNET_NOLOGO: false
       VAULT_ADDRESS: http://localhost:8200
     services:
       vault:

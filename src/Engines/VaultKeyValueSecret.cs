@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace Byndyusoft.Extensions.Configuration.Vault.Engines
+﻿namespace Byndyusoft.Extensions.Configuration.Vault.Engines
 {
+    using System.Collections.Generic;
+
     public class VaultKeyValueSecret
     {
         public string Key { get; set; }

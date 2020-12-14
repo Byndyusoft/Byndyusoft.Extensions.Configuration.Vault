@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using VaultSharp;
-using VaultSharp.Core;
-
-namespace Byndyusoft.Extensions.Configuration.Vault.Engines
+﻿namespace Byndyusoft.Extensions.Configuration.Vault.Engines
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using VaultSharp;
+    using VaultSharp.Core;
+
     public abstract class VaultKeyValueEngine : IVaultKeyValueEngine
     {
         protected VaultKeyValueEngine(VaultClient client, VaultConfigurationSource source)
@@ -21,10 +21,6 @@ namespace Byndyusoft.Extensions.Configuration.Vault.Engines
 
         private VaultConfigurationSource Source { get; }
 
-        protected abstract Task<IEnumerable<string>> ReadSecretKeysAsync();
-
-        protected abstract Task<IDictionary<string, object>> ReadSecretAsync(string path);
-
         public virtual async Task<IReadOnlyCollection<VaultKeyValueSecret>> ReadSecretsAsync()
         {
             var secretKeys = await DoReadSecretKeysAsync().ConfigureAwait(false);
@@ -34,14 +30,18 @@ namespace Byndyusoft.Extensions.Configuration.Vault.Engines
             {
                 var secret = await ReadSecretAsync(secretKey).ConfigureAwait(false);
                 secrects.Add(new VaultKeyValueSecret
-                {
-                    Key = secretKey,
-                    Values = secret
-                });
+                             {
+                                 Key = secretKey,
+                                 Values = secret
+                             });
             }
 
             return secrects;
         }
+
+        protected abstract Task<IEnumerable<string>> ReadSecretKeysAsync();
+
+        protected abstract Task<IDictionary<string, object>> ReadSecretAsync(string path);
 
         private async Task<IEnumerable<string>> DoReadSecretKeysAsync()
         {
@@ -52,9 +52,7 @@ namespace Byndyusoft.Extensions.Configuration.Vault.Engines
             catch (VaultApiException e) when (e.StatusCode == 404)
             {
                 if (Source.Optional == false && await CheckIfExistsAsync().ConfigureAwait(false) == false)
-                {
                     throw new VaultEngineNotFoundException(Name);
-                }
             }
 
             return Enumerable.Empty<string>();

@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json.Linq;
-
-namespace Byndyusoft.Extensions.Configuration.Vault.Json
+﻿namespace Byndyusoft.Extensions.Configuration.Vault.Json
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Linq;
+    using Microsoft.Extensions.Configuration;
+    using Newtonsoft.Json.Linq;
+
     internal class JsonObjectParser
     {
-        private readonly IDictionary<string, string> _data = new SortedDictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         private readonly Stack<string> _context = new Stack<string>();
+        private readonly IDictionary<string, string> _data = new SortedDictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         private string _currentPath;
 
         public IDictionary<string, string> Parse(JObject jObject)
@@ -64,7 +64,7 @@ namespace Byndyusoft.Extensions.Configuration.Vault.Json
 
         private void VisitArray(JArray array)
         {
-            for (int index = 0; index < array.Count; index++)
+            for (var index = 0; index < array.Count; index++)
             {
                 EnterContext(index.ToString());
                 VisitToken(array[index]);
@@ -76,10 +76,7 @@ namespace Byndyusoft.Extensions.Configuration.Vault.Json
         {
             var key = _currentPath;
 
-            if (_data.ContainsKey(key))
-            {
-                throw new FormatException(string.Format(Resources.Error_KeyIsDuplicated, key));
-            }
+            if (_data.ContainsKey(key)) throw new FormatException(string.Format(Resources.Error_KeyIsDuplicated, key));
             _data[key] = data.ToString(CultureInfo.InvariantCulture);
         }
 

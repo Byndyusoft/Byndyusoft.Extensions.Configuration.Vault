@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Byndyusoft.Extensions.Confi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C60BDB53-134F-4946-AB75-49F76ABB5048}"
 	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
 		CONTRIBUTING.md = CONTRIBUTING.md
+		icon.png = icon.png
 		LICENSE.txt = LICENSE.txt
 		README.md = README.md
 	EndProjectSection
@@ -24,6 +26,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 		.github\workflows\push.yml = .github\workflows\push.yml
 		.github\workflows\release.yml = .github\workflows\release.yml
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{01919E89-6AEC-42D3-AB4C-41C125F5E656}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -46,6 +50,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{C79EB936-24BA-4890-A913-5AB67A5E9B9E} = {34F59A32-1354-4696-AD46-2EBFCAA4D1A6}
 		{4E5F91FD-0416-4215-B657-F9F8A418AEC6} = {FFA2F0DC-4EC5-41EE-9D01-A30D869C27C6}
+		{E4AEFFE4-ADA3-40DB-978F-AA775648BB6C} = {01919E89-6AEC-42D3-AB4C-41C125F5E656}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2603293C-3CB3-4E26-8990-0D6EB19A803D}

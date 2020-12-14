@@ -14,8 +14,14 @@
 
         public string Url { get; }
 
-        public ValueTask DisposeAsync() => default;
+        public ValueTask DisposeAsync()
+        {
+            return default;
+        }
 
-        public ValueTask StartAsync() => default;
+        public ValueTask StartAsync()
+        {
+            return default;
+        }
     }
 }

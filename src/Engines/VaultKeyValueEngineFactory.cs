@@ -1,9 +1,9 @@
-﻿using System;
-using Microsoft.Extensions.Configuration;
-using VaultSharp;
-
-namespace Byndyusoft.Extensions.Configuration.Vault.Engines
+﻿namespace Byndyusoft.Extensions.Configuration.Vault.Engines
 {
+    using System;
+    using Microsoft.Extensions.Configuration;
+    using VaultSharp;
+
     public class VaultKeyValueEngineFactory
     {
         public IVaultKeyValueEngine CreateEngine(VaultConfigurationSource source)
@@ -20,7 +20,6 @@ namespace Byndyusoft.Extensions.Configuration.Vault.Engines
                 default:
                     throw new ArgumentOutOfRangeException(nameof(VaultKeyValueEngineVersion));
             }
-
         }
     }
 }

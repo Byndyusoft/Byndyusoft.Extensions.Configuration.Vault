@@ -5,10 +5,9 @@
 
     public interface IVaultApi : IAsyncDisposable
     {
-        ValueTask StartAsync();
-
         string Token { get; }
 
         string Url { get; }
+        ValueTask StartAsync();
     }
 }

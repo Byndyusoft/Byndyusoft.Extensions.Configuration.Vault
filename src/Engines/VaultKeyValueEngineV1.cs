@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using VaultSharp;
-
-namespace Byndyusoft.Extensions.Configuration.Vault.Engines
+﻿namespace Byndyusoft.Extensions.Configuration.Vault.Engines
 {
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using VaultSharp;
+
     public class VaultKeyValueEngineV1 : VaultKeyValueEngine
     {
         public VaultKeyValueEngineV1(VaultClient client, VaultConfigurationSource source) : base(client, source)

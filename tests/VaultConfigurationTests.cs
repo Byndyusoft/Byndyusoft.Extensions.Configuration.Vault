@@ -12,27 +12,11 @@
 
     public class VaultConfigurationTests : IAsyncLifetime, IClassFixture<VaultConfigurationTests.VaultFixture>
     {
-        public class VaultFixture : IDisposable
-        {
-            public readonly IVaultApi Api;
-
-            public VaultFixture()
-            {
-                Api = VaultApi.Create();
-                //Api = new ExtenalVaultApi("http://localhost:8200", "s.aZxzEX9aDL6GWIudspV5l3wl");
-                Api.StartAsync().ConfigureAwait(false).GetAwaiter().GetResult();
-            }
-
-            public void Dispose()
-            {
-                Api.DisposeAsync().ConfigureAwait(false).GetAwaiter().GetResult();
-            }
-        }
+        private readonly IAuthMethodInfo _authMethod;
+        private readonly string _engineName;
+        private readonly string _uri;
 
         private readonly VaultClient _vaultClient;
-        private readonly IAuthMethodInfo _authMethod;
-        private readonly string _uri;
-        private readonly string _engineName;
 
         public VaultConfigurationTests(VaultFixture fixture)
         {
@@ -47,7 +31,10 @@
             await _vaultClient.RemoveEngineAsync(_engineName);
         }
 
-        public Task DisposeAsync() => Task.CompletedTask;
+        public Task DisposeAsync()
+        {
+            return Task.CompletedTask;
+        }
 
         private IConfiguration Configure(Action<VaultConfigurationSource> configureSource)
         {
@@ -175,6 +162,23 @@
 
             // Assert
             Assert.Equal("new", config.GetValue<string>("secret:key"));
+        }
+
+        public class VaultFixture : IDisposable
+        {
+            public readonly IVaultApi Api;
+
+            public VaultFixture()
+            {
+                Api = VaultApi.Create();
+                //Api = new ExtenalVaultApi("http://localhost:8200", "s.aZxzEX9aDL6GWIudspV5l3wl");
+                Api.StartAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            public void Dispose()
+            {
+                Api.DisposeAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            }
         }
     }
 }

@@ -11,9 +11,7 @@
             var dict = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
 
             foreach (PropertyDescriptor propertyDescriptor in TypeDescriptor.GetProperties(values))
-            {
                 dict.Add(propertyDescriptor.Name, propertyDescriptor.GetValue(values));
-            }
 
             return dict;
         }

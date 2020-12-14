@@ -1,22 +1,22 @@
 namespace Byndyusoft.Extensions.Configuration.Vault
 {
     using System;
-    using Xunit;
     using Microsoft.Extensions.Configuration;
     using VaultSharp.V1.AuthMethods;
     using VaultSharp.V1.AuthMethods.Token;
+    using Xunit;
 
     public class VaultConfigurationExtensionsTests
     {
-        private readonly string _url = "http://localhost:8200";
         private readonly IAuthMethodInfo _authMethod = new TokenAuthMethodInfo("token");
         private readonly string _engine = "engine";
+        private readonly string _url = "http://localhost:8200";
 
         [Fact]
         public void AddVault_ThrowsIfBuilderIsNull()
         {
             // Act and Assert
-            var ex = Assert.Throws<ArgumentNullException>(() => ((ConfigurationBuilder)null).AddVault(_url, _authMethod, _engine));
+            var ex = Assert.Throws<ArgumentNullException>(() => ((ConfigurationBuilder) null).AddVault(_url, _authMethod, _engine));
             Assert.Equal("builder", ex.ParamName);
         }
 

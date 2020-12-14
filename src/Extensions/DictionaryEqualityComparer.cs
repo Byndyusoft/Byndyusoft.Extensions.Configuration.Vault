@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace Byndyusoft.Extensions.Configuration.Vault.Extensions
+﻿namespace Byndyusoft.Extensions.Configuration.Vault.Extensions
 {
+    using System.Collections.Generic;
+    using System.Linq;
+
     public class DictionaryEqualityComparer<TKey, TValue> : IEqualityComparer<IDictionary<TKey, TValue>>
     {
         public static readonly DictionaryEqualityComparer<TKey, TValue> Instance = new DictionaryEqualityComparer<TKey, TValue>();

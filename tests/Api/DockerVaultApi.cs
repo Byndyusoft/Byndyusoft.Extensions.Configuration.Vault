@@ -13,8 +13,8 @@
 
     public class DockerVaultApi : IVaultApi
     {
-        private readonly string _port;
         private readonly DockerClient _docker;
+        private readonly string _port;
         private string _containerId;
 
         public DockerVaultApi()
@@ -33,9 +33,9 @@
             await _docker.Images.CreateImageAsync(
                 new ImagesCreateParameters
                 {
-                    FromImage = "vault", 
+                    FromImage = "vault",
                     Tag = "latest"
-                }, 
+                },
                 null, new Progress<JSONMessage>());
 
             var container = await _docker.Containers.CreateContainerAsync(
@@ -80,6 +80,11 @@
             }
         }
 
+        public async ValueTask DisposeAsync()
+        {
+            await StopAsync();
+        }
+
         private async Task WaitStartingAsync(TimeSpan timeout)
         {
             var settings = new VaultClientSettings(Url, null);
@@ -110,16 +115,11 @@
             _containerId = null;
         }
 
-        public async ValueTask DisposeAsync()
-        {
-            await StopAsync();
-        }
-
         private static int FreeTcpPort()
         {
             var listener = new TcpListener(IPAddress.Loopback, 0);
             listener.Start();
-            int port = ((IPEndPoint)listener.LocalEndpoint).Port;
+            var port = ((IPEndPoint) listener.LocalEndpoint).Port;
             listener.Stop();
             return port;
         }

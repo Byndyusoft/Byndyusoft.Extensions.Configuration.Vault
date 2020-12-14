@@ -1,4 +1,5 @@
 ﻿// ReSharper disable once CheckNamespace
+
 namespace Microsoft.Extensions.Configuration
 {
     using System;
@@ -6,12 +7,12 @@ namespace Microsoft.Extensions.Configuration
     using VaultSharp.V1.AuthMethods;
 
     /// <summary>
-    /// Extension methods for adding <see cref="VaultConfigurationProvider" />.
+    ///     Extension methods for adding <see cref="VaultConfigurationProvider" />.
     /// </summary>
     public static class VaultConfigurationExtensions
     {
         /// <summary>
-        /// Adds a HashiCorp Vault configuration source to <paramref name="builder" />.
+        ///     Adds a HashiCorp Vault configuration source to <paramref name="builder" />.
         /// </summary>
         /// <param name="builder">The <see cref="IConfigurationBuilder" /> to add to.</param>
         /// <param name="vaultServerUriWithPort">The Vault Server Uri with port.</param>
@@ -40,7 +41,7 @@ namespace Microsoft.Extensions.Configuration
         }
 
         /// <summary>
-        /// Adds a HashiCorp Vault configuration source to <paramref name="builder" />.
+        ///     Adds a HashiCorp Vault configuration source to <paramref name="builder" />.
         /// </summary>
         /// <param name="builder">The <see cref="IConfigurationBuilder" /> to add to.</param>
         /// <param name="vaultServerUriWithPort">The Vault Server Uri with port.</param>
@@ -72,13 +73,15 @@ namespace Microsoft.Extensions.Configuration
         }
 
         /// <summary>
-        /// Adds a HashiCorp Vault configuration source to <paramref name="builder"/>.
+        ///     Adds a HashiCorp Vault configuration source to <paramref name="builder" />.
         /// </summary>
-        /// <param name="builder">The <see cref="IConfigurationBuilder"/> to add to.</param>
+        /// <param name="builder">The <see cref="IConfigurationBuilder" /> to add to.</param>
         /// <param name="configureSource">Configures the source.</param>
-        /// <returns>The <see cref="IConfigurationBuilder"/>.</returns>
+        /// <returns>The <see cref="IConfigurationBuilder" />.</returns>
         internal static IConfigurationBuilder AddVault(this IConfigurationBuilder builder,
             Action<VaultConfigurationSource> configureSource)
-            => builder.Add(configureSource);
+        {
+            return builder.Add(configureSource);
+        }
     }
 }
